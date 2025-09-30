@@ -5,11 +5,11 @@ from langchain_community.document_loaders import DirectoryLoader
 from langchain_text_splitters import RecursiveCharacterTextSplitter
 from langchain_community.vectorstores import Chroma
 
-from .embeddings import get_embedding_function
+from app.services.embeddings import get_embedding_function
 
 # --- Configuration ---
-KNOWLEDGE_BASE_DIR = "backend/knowledge_base"
-CHROMA_DB_DIR = "backend/chroma_db"
+KNOWLEDGE_BASE_DIR = "knowledge_base"
+CHROMA_DB_DIR = "chroma_db"
 
 def build_vector_store():
     """
@@ -17,7 +17,7 @@ def build_vector_store():
     using the embedding provider specified in the environment variables.
     """
     # Load environment variables from .env file in the backend directory
-    load_dotenv(dotenv_path='backend/.env')
+    load_dotenv(dotenv_path='.env')
 
     # --- 1. Get Embedding Function ---
     try:
