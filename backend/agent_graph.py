@@ -10,8 +10,14 @@ from .agent_tools import all_tools
 
 # Load environment variables
 load_dotenv(dotenv_path='backend/.env')
-if not os.getenv("OPENAI_API_KEY") or os.getenv("OPENAI_API_KEY") == "YOUR_OPENAI_API_KEY_HERE":
-    print("Warning: OPENAI_API_KEY not set. The Agent will not be able to function.")
+
+# --- Get AI Service Configuration ---
+api_key = os.getenv("OPENAI_API_KEY")
+api_base = os.getenv("OPENAI_API_BASE", "https://api.openai.com/v1")
+model_name = os.getenv("OPENAI_MODEL_NAME", "gpt-4o")
+
+if not api_key or api_key == "YOUR_OPENAI_API_KEY_HERE":
+    print("Warning: OPENAI_API_KEY not set or is a placeholder. The Agent may not function.")
 
 # --- 1. Define the Agent State ---
 class AgentState(TypedDict):
@@ -25,8 +31,13 @@ class AgentState(TypedDict):
 
 # Initialize the tool executor and the language model
 tool_executor = ToolExecutor(all_tools)
-# We will use a powerful model that is good at function calling
-model = ChatOpenAI(temperature=0, model="gpt-4o")
+
+model = ChatOpenAI(
+    temperature=0,
+    model=model_name,
+    openai_api_key=api_key,
+    openai_api_base=api_base,
+)
 # Bind the tools to the model
 model = model.bind_tools(all_tools)
 

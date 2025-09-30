@@ -6,13 +6,15 @@ services:
       context: .
       dockerfile: backend/Dockerfile
       args:
-        # This ARG is used during the build phase to create the vector store
+        # These ARGs are used during the build phase to create the vector store
         - OPENAI_API_KEY=${OPENAI_API_KEY}
+        - OPENAI_API_BASE=${OPENAI_API_BASE}
+        - OPENAI_EMBEDDINGS_MODEL_NAME=${OPENAI_EMBEDDINGS_MODEL_NAME}
     image: ai-ecommerce-backend
     container_name: ai-ecommerce-backend
     restart: unless-stopped
     env_file:
-      - backend/.env.example # docker-compose will look for a .env file in the same dir
+      - .env # Load runtime environment variables from a .env file in the root
     ports:
       - "8000:8000"
     networks:

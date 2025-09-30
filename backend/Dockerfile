@@ -9,13 +9,19 @@ RUN pip install --no-cache-dir -r requirements.txt
 
 # Copy application code and knowledge base
 COPY backend/ ./backend/
-COPY backend/.env.example ./backend/.env
 
-# The build process needs the API key to generate embeddings
+# The build process needs the API key and other configs to generate embeddings.
+# These are passed from docker-compose as build arguments.
 ARG OPENAI_API_KEY
-RUN sed -i "s/YOUR_OPENAI_API_KEY_HERE/${OPENAI_API_KEY}/" backend/.env
+ARG OPENAI_API_BASE
+ARG OPENAI_EMBEDDINGS_MODEL_NAME
 
-# Build the vector store
+# Set them as environment variables for the build script to use.
+ENV OPENAI_API_KEY=${OPENAI_API_KEY}
+ENV OPENAI_API_BASE=${OPENAI_API_BASE}
+ENV OPENAI_EMBEDDINGS_MODEL_NAME=${OPENAI_EMBEDDINGS_MODEL_NAME}
+
+# Build the vector store. The script uses os.getenv() to get these values.
 RUN python -m backend.build_vector_store
 
 # Stage 2: Final application image

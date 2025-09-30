@@ -5,13 +5,15 @@ from langchain_community.vectorstores import Chroma
 
 # --- Configuration ---
 CHROMA_DB_DIR = "backend/chroma_db"
-# Load environment variables (for OpenAI API key)
 load_dotenv(dotenv_path='backend/.env')
-openai_api_key = os.getenv("OPENAI_API_KEY")
 
 class KnowledgeService:
     def __init__(self):
-        if not openai_api_key or openai_api_key == "YOUR_OPENAI_API_KEY_HERE":
+        api_key = os.getenv("OPENAI_API_KEY")
+        api_base = os.getenv("OPENAI_API_BASE", "https://api.openai.com/v1")
+        embeddings_model = os.getenv("OPENAI_EMBEDDINGS_MODEL_NAME", "text-embedding-3-small")
+
+        if not api_key or api_key == "YOUR_OPENAI_API_KEY_HERE":
             raise ValueError("OpenAI API key not found. Please set it in backend/.env")
 
         if not os.path.exists(CHROMA_DB_DIR):
@@ -20,7 +22,11 @@ class KnowledgeService:
                 "Please run 'python -m backend.build_vector_store' first."
             )
 
-        self.embedding_function = OpenAIEmbeddings()
+        self.embedding_function = OpenAIEmbeddings(
+            model=embeddings_model,
+            openai_api_key=api_key,
+            openai_api_base=api_base,
+        )
         self.vector_store = Chroma(
             persist_directory=CHROMA_DB_DIR,
             embedding_function=self.embedding_function

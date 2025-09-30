@@ -25,10 +25,11 @@ This is the easiest way to get the entire application running with a single comm
 
 **Instructions:**
 
-1.  **Configure API Key**:
-    - In the `backend/` directory, you'll find a file named `backend/.env.example`.
-    - Create a copy of this file in the same directory and name it `.env`.
-    - Open the new `.env` file and replace `"YOUR_OPENAI_API_KEY_HERE"` with your actual OpenAI API key.
+1.  **Configure Environment**:
+    - In the `backend/` directory, you'll find a file named `backend/.env.example`. This file shows all possible configurations.
+    - **In the project's root directory**, create a new file named `.env`.
+    - Copy the contents from `backend/.env.example` into your new `.env` file and fill in your values. At a minimum, you must provide your `OPENAI_API_KEY`.
+    - You can customize `OPENAI_API_BASE` to point to a local LLM or another provider, and change the `OPENAI_MODEL_NAME` as needed.
 
 2.  **Build and Run**:
     - Open your terminal in the project's root directory.
@@ -54,11 +55,11 @@ Follow these steps to run the frontend and backend services separately.
 - Node.js and npm
 - An OpenAI API Key
 
-**Step 1: Configure API Key**
+**Step 1: Configure Environment**
 
 1.  Navigate to the `backend/` directory.
-2.  You will find a file named `backend/.env.example`. Create a copy named `.env`.
-3.  Open the new `.env` file and replace the placeholder text with your actual OpenAI API key.
+2.  You will find a file named `backend/.env.example`. Create a copy named `.env` in the same directory.
+3.  Open the new `.env` file and fill in your values. At a minimum, you must provide your `OPENAI_API_KEY`. You can also customize the API base URL and model names here.
 
 **Step 2: Set Up and Run the Backend**
 
