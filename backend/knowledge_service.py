@@ -1,7 +1,8 @@
 import os
 from dotenv import load_dotenv
-from langchain_openai import OpenAIEmbeddings
 from langchain_community.vectorstores import Chroma
+
+from .embeddings import get_embedding_function
 
 # --- Configuration ---
 CHROMA_DB_DIR = "backend/chroma_db"
@@ -9,30 +10,25 @@ load_dotenv(dotenv_path='backend/.env')
 
 class KnowledgeService:
     def __init__(self):
-        api_key = os.getenv("OPENAI_API_KEY")
-        api_base = os.getenv("OPENAI_API_BASE", "https://api.openai.com/v1")
-        embeddings_model = os.getenv("OPENAI_EMBEDDINGS_MODEL_NAME", "text-embedding-3-small")
-
-        if not api_key or api_key == "YOUR_OPENAI_API_KEY_HERE":
-            raise ValueError("OpenAI API key not found. Please set it in backend/.env")
-
         if not os.path.exists(CHROMA_DB_DIR):
              raise FileNotFoundError(
                 f"ChromaDB directory not found at '{CHROMA_DB_DIR}'. "
                 "Please run 'python -m backend.build_vector_store' first."
             )
 
-        self.embedding_function = OpenAIEmbeddings(
-            model=embeddings_model,
-            openai_api_key=api_key,
-            openai_api_base=api_base,
-        )
+        try:
+            # Use the centralized function to get the embedding model
+            self.embedding_function = get_embedding_function()
+        except ValueError as e:
+            # Re-raise the error to be caught by the FastAPI lifespan manager
+            raise e
+
         self.vector_store = Chroma(
             persist_directory=CHROMA_DB_DIR,
             embedding_function=self.embedding_function
         )
         self.retriever = self.vector_store.as_retriever(search_kwargs={"k": 3})
-        print("KnowledgeService initialized successfully.")
+        print("KnowledgeService initialized successfully with embeddings.")
 
     def answer_question(self, question: str) -> dict:
         """

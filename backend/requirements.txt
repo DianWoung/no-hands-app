@@ -7,5 +7,6 @@ langchain
 langchain-community
 langgraph
 langchain-openai
+langchain-ollama
 chromadb
 faiss-cpu

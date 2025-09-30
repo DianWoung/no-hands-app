@@ -26,10 +26,12 @@ This is the easiest way to get the entire application running with a single comm
 **Instructions:**
 
 1.  **Configure Environment**:
-    - In the `backend/` directory, you'll find a file named `backend/.env.example`. This file shows all possible configurations.
-    - **In the project's root directory**, create a new file named `.env`.
-    - Copy the contents from `backend/.env.example` into your new `.env` file and fill in your values. At a minimum, you must provide your `OPENAI_API_KEY`.
-    - You can customize `OPENAI_API_BASE` to point to a local LLM or another provider, and change the `OPENAI_MODEL_NAME` as needed.
+    - In the project's root directory, you'll find a file named `.env.example`.
+    - Create a copy of this file and name it `.env`.
+    - Open the new `.env` file and fill in your values.
+      - **`OPENAI_API_KEY`** is always required.
+      - To use a local model for embeddings (like Llama), set **`EMBEDDINGS_PROVIDER="ollama"`**.
+      - You can also customize the API base URL, chat model, and embedding model names.
 
 2.  **Build and Run**:
     - Open your terminal in the project's root directory.
@@ -37,10 +39,18 @@ This is the easiest way to get the entire application running with a single comm
       ```bash
       docker-compose up --build
       ```
-    - This command will build the frontend and backend images (including the vector store), and start both services. It may take a few minutes the first time you run it.
+    - This command will build all images (including the vector store) and start all services (backend, frontend, and ollama). It may take a few minutes the first time.
 
-3.  **Chat with Your AI!**
-    - Once the build is complete and the services are running, open your web browser and navigate to:
+3.  **(If using Ollama) Pull a Local Model**:
+    - While `docker-compose` is running in another terminal, you need to pull the embedding model for Ollama to use.
+    - Run the following command:
+      ```bash
+      docker exec -it ollama ollama pull nomic-embed-text
+      ```
+    - You only need to do this once.
+
+4.  **Chat with Your AI!**
+    - Once the services are running, open your web browser and navigate to:
       [http://localhost:3000](http://localhost:3000)
     - The chat interface should be ready to use.
 

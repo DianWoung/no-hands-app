@@ -6,17 +6,22 @@ services:
       context: .
       dockerfile: backend/Dockerfile
       args:
-        # These ARGs are used during the build phase to create the vector store
+        # Pass build-time variables for vector store creation
         - OPENAI_API_KEY=${OPENAI_API_KEY}
         - OPENAI_API_BASE=${OPENAI_API_BASE}
         - OPENAI_EMBEDDINGS_MODEL_NAME=${OPENAI_EMBEDDINGS_MODEL_NAME}
+        - EMBEDDINGS_PROVIDER=${EMBEDDINGS_PROVIDER}
+        - OLLAMA_BASE_URL=${OLLAMA_BASE_URL}
+        - OLLAMA_EMBEDDINGS_MODEL_NAME=${OLLAMA_EMBEDDINGS_MODEL_NAME}
     image: ai-ecommerce-backend
     container_name: ai-ecommerce-backend
     restart: unless-stopped
     env_file:
-      - .env # Load runtime environment variables from a .env file in the root
+      - .env
     ports:
       - "8000:8000"
+    depends_on:
+      - ollama
     networks:
       - ecommerce-net
 
@@ -34,6 +39,20 @@ services:
     networks:
       - ecommerce-net
 
+  ollama:
+    image: ollama/ollama
+    container_name: ollama
+    restart: unless-stopped
+    volumes:
+      - ollama_data:/root/.ollama
+    ports:
+      - "11434:11434"
+    networks:
+      - ecommerce-net
+
 networks:
   ecommerce-net:
     driver: bridge
+
+volumes:
+  ollama_data:
