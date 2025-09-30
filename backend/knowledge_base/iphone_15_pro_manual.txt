@@ -1,0 +1,18 @@
+# iPhone 15 Pro Product Manual
+
+## Key Features
+
+- **Chip:** A17 Pro chip. A new class of iPhone chip that delivers our best graphics performance by far.
+- **Display:** Super Retina XDR display with ProMotion technology. 6.1-inch (diagonal) all-screen OLED display.
+- **Camera System:** Pro 48MP camera system (Main, Ultra Wide, and Telephoto).
+- **Battery Life:** Up to 23 hours of video playback. Supports MagSafe and Qi wireless charging.
+- **Material:** Aerospace-grade titanium design, making it the lightest Pro model ever.
+- **Connectivity:** USB-C connector with support for USB 3 for up to 10Gb/s transfer speeds.
+- **Action Button:** A new, customizable Action button that gives users a shortcut to their favorite features.
+
+## Technical Specifications
+
+- **Capacity:** Available in 128GB, 256GB, 512GB, and 1TB models.
+- **Water Resistance:** Rated IP68 (maximum depth of 6 meters up to 30 minutes) under IEC standard 60529.
+- **In the Box:** iPhone with iOS 17, USB-C Charge Cable (1 m), Documentation. Power adapter and headphones sold separately.
+- **Warranty:** Comes with a one-year limited warranty. Extended coverage is available with AppleCare+.
