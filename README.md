@@ -13,60 +13,90 @@ The assistant is built with a modern, robust tech stack:
 
 ## How to Run This Project
 
-Follow these steps to get the AI assistant running on your local machine.
+There are two ways to run this project: using Docker (recommended for ease of use) or running the services manually.
 
-### Prerequisites
+### Option 1: Using Docker (Recommended)
 
+This is the easiest way to get the entire application running with a single command.
+
+**Prerequisites:**
+- Docker and Docker Compose installed.
+- An OpenAI API Key.
+
+**Instructions:**
+
+1.  **Configure API Key**:
+    - In the `backend/` directory, you'll find a file named `backend/.env.example`.
+    - Create a copy of this file in the same directory and name it `.env`.
+    - Open the new `.env` file and replace `"YOUR_OPENAI_API_KEY_HERE"` with your actual OpenAI API key.
+
+2.  **Build and Run**:
+    - Open your terminal in the project's root directory.
+    - Run the following command:
+      ```bash
+      docker-compose up --build
+      ```
+    - This command will build the frontend and backend images (including the vector store), and start both services. It may take a few minutes the first time you run it.
+
+3.  **Chat with Your AI!**
+    - Once the build is complete and the services are running, open your web browser and navigate to:
+      [http://localhost:3000](http://localhost:3000)
+    - The chat interface should be ready to use.
+
+---
+
+### Option 2: Running Manually
+
+Follow these steps to run the frontend and backend services separately.
+
+**Prerequisites:**
 - Python 3.10+
 - Node.js and npm
 - An OpenAI API Key
 
-### Step 1: Configure Your API Key
+**Step 1: Configure API Key**
 
 1.  Navigate to the `backend/` directory.
-2.  You will find a file named `.env`. Open it.
-3.  Replace the placeholder text `"YOUR_OPENAI_API_KEY_HERE"` with your actual OpenAI API key.
+2.  You will find a file named `backend/.env.example`. Create a copy named `.env`.
+3.  Open the new `.env` file and replace the placeholder text with your actual OpenAI API key.
 
-### Step 2: Set Up and Run the Backend
+**Step 2: Set Up and Run the Backend**
 
 1.  **Install Dependencies**:
-    Open your terminal, navigate to the project's root directory, and run:
+    From the project's root directory, run:
     ```bash
     pip install -r backend/requirements.txt
     ```
 
 2.  **Build the Knowledge Base**:
-    This step "teaches" the AI about the products by reading the documents in `backend/knowledge_base/` and storing them in the vector database.
+    This step "teaches" the AI about the products. *This requires a valid OpenAI API key.*
     ```bash
     python -m backend.build_vector_store
     ```
-    *Note: This command requires a valid OpenAI API key to be set, as it generates embeddings.*
 
 3.  **Run the Backend Server**:
-    Now, start the FastAPI server. The `PYTHONPATH=.` part is important to ensure Python can find the `backend` module.
+    The `PYTHONPATH=.` part is important.
     ```bash
     PYTHONPATH=. uvicorn backend.main:app --host 0.0.0.0 --port 8000
     ```
     Your backend is now running at `http://localhost:8000`.
 
-### Step 3: Set Up and Run the Frontend
+**Step 3: Set Up and Run the Frontend**
 
 1.  **Install Dependencies**:
-    Open a **new terminal window**, navigate to the `frontend/` directory, and run:
+    In a **new terminal window**, navigate to the `frontend/` directory and run:
     ```bash
     npm install
     ```
 
 2.  **Run the Frontend Server**:
-    Once the installation is complete, start the React development server:
     ```bash
     npm start
     ```
-    This will automatically open a new tab in your web browser.
 
-### Step 4: Chat with Your AI!
+**Step 4: Chat with Your AI!**
 
-Your browser should now be open to `http://localhost:3000`, displaying the chat interface. The status on the page should say "Connected".
+Your browser should open to `http://localhost:3000`. The status on the page should say "Connected".
 
 You can now start asking questions! Try these:
 
