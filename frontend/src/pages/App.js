@@ -39,31 +39,39 @@ function App() {
         const data = JSON.parse(event.data);
 
         setMessages(prev => {
-          const newMessages = [...prev];
-          const lastMessage = newMessages[newMessages.length - 1];
+            const lastMessage = prev[prev.length - 1];
 
-          if (data.type === 'status') {
-            // Update the status of the last "thinking" message
-            if (lastMessage && lastMessage.sender === 'ai' && lastMessage.isThinking) {
-               lastMessage.text = data.content;
-               return newMessages;
+            if (data.type === 'status') {
+                // Update the status of the last "thinking" message
+                if (lastMessage && lastMessage.sender === 'ai' && lastMessage.isThinking) {
+                    return prev.map((msg, index) =>
+                        index === prev.length - 1
+                            ? { ...msg, text: data.content }
+                            : msg
+                    );
+                }
             }
-          }
-          else if (data.type === 'stream_chunk') {
-            // Append the chunk to the AI's response
-            if (lastMessage && lastMessage.sender === 'ai' && lastMessage.isThinking) {
-              lastMessage.text += data.content;
-              return newMessages;
+            else if (data.type === 'stream_chunk') {
+                // Append the chunk to the AI's response
+                if (lastMessage && lastMessage.sender === 'ai' && lastMessage.isThinking) {
+                    return prev.map((msg, index) =>
+                        index === prev.length - 1
+                            ? { ...msg, text: msg.text + data.content }
+                            : msg
+                    );
+                }
             }
-          }
-          else if (data.type === 'stream_end') {
-            // Mark the message as complete
-            if (lastMessage && lastMessage.sender === 'ai' && lastMessage.isThinking) {
-              lastMessage.isThinking = false;
-              return newMessages;
+            else if (data.type === 'stream_end') {
+                // Mark the message as complete
+                if (lastMessage && lastMessage.sender === 'ai' && lastMessage.isThinking) {
+                    return prev.map((msg, index) =>
+                        index === prev.length - 1
+                            ? { ...msg, isThinking: false }
+                            : msg
+                    );
+                }
             }
-          }
-          return prev;
+            return prev;
         });
       };
     };
@@ -78,10 +86,12 @@ function App() {
   // --- Sending a Message ---
   const sendMessage = () => {
     if (input.trim() && ws.current && ws.current.readyState === WebSocket.OPEN) {
-      // Add user message
-      setMessages(prev => [...prev, { text: input, sender: 'user' }]);
-      // Add a blank placeholder for the AI response that will be populated by the stream
-      setMessages(prev => [...prev, { text: '', sender: 'ai', isThinking: true }]);
+      // Add user message and AI placeholder in a single state update
+      setMessages(prev => [
+          ...prev,
+          { text: input, sender: 'user' },
+          { text: '', sender: 'ai', isThinking: true }
+      ]);
 
       ws.current.send(input);
       setInput('');
