@@ -1,0 +1,27 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(docker-compose up:*)",
+      "Bash(pip install:*)",
+      "Bash(python3:*)",
+      "Bash(source:*)",
+      "Bash(python:*)",
+      "Bash(PYTHONPATH=. python:*)",
+      "Bash(ls:*)",
+      "Bash(addproxy:*)",
+      "Bash(PYTHONPATH=. uvicorn:*)",
+      "Bash(npm install:*)",
+      "Bash(npm start:*)",
+      "Bash(curl:*)",
+      "Bash(pkill:*)",
+      "Read(//Users/dianwang-mac/**)",
+      "Bash(export:*)",
+      "Bash(jobs:*)",
+      "Bash(awk:*)",
+      "Bash(xargs kill:*)",
+      "Bash(lsof:*)"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}

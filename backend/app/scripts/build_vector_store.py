@@ -17,7 +17,7 @@ def build_vector_store():
     using the embedding provider specified in the environment variables.
     """
     # Load environment variables from .env file in the backend directory
-    load_dotenv(dotenv_path='.env')
+    load_dotenv(dotenv_path='../.env')
 
     # --- 1. Get Embedding Function ---
     try:
@@ -28,8 +28,9 @@ def build_vector_store():
 
     # --- 2. Load Documents ---
     print(f"Loading documents from '{KNOWLEDGE_BASE_DIR}'...")
-    loader = DirectoryLoader(KNOWLEDGE_BASE_DIR, glob="**/*.[md|txt]")
-    documents = loader.load()
+    loader = DirectoryLoader(KNOWLEDGE_BASE_DIR, glob="**/*.md")
+    txt_loader = DirectoryLoader(KNOWLEDGE_BASE_DIR, glob="**/*.txt")
+    documents = loader.load() + txt_loader.load()
     if not documents:
         print("No documents found. Aborting.")
         return

@@ -1,6 +1,10 @@
 import os
+from dotenv import load_dotenv
 from langchain_openai import OpenAIEmbeddings
 from langchain_community.embeddings import OllamaEmbeddings
+
+# Load environment variables from project root
+load_dotenv(dotenv_path='../.env', override=True)
 
 def get_embedding_function():
     """

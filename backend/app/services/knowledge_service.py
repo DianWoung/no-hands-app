@@ -5,8 +5,8 @@ from langchain_community.vectorstores import Chroma
 from .embeddings import get_embedding_function
 
 # --- Configuration ---
-CHROMA_DB_DIR = "backend/chroma_db"
-load_dotenv(dotenv_path='backend/.env')
+CHROMA_DB_DIR = "chroma_db"
+load_dotenv(dotenv_path='../.env', override=True)
 
 class KnowledgeService:
     def __init__(self):

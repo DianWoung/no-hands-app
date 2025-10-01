@@ -8,8 +8,8 @@ from langgraph.prebuilt import ToolNode, tools_condition
 
 from .agent_tools import all_tools
 
-# Load environment variables
-load_dotenv(dotenv_path='backend/.env')
+# Load environment variables, overriding system environment variables
+load_dotenv(dotenv_path='../.env', override=True)
 
 # --- Get AI Service Configuration ---
 api_key = os.getenv("OPENAI_API_KEY")
