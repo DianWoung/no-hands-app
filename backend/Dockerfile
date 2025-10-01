@@ -47,6 +47,8 @@ ENV PYTHONPATH "${PYTHONPATH}:/app"
 # Copy only the necessary files from the builder stage
 # Copy installed packages
 COPY --from=builder /usr/local/lib/python3.12/site-packages/ /usr/local/lib/python3.12/site-packages/
+# Copy installed executables (like uvicorn)
+COPY --from=builder /usr/local/bin/ /usr/local/bin/
 # Copy application code, which now includes the generated vector store and db
 COPY --from=builder /app/ .
 
