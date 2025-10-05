@@ -1,5 +1,9 @@
 import React, { useState, useEffect, useRef } from 'react';
 import ReactMarkdown from 'react-markdown';
+import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
+import { a11yDark } from 'react-syntax-highlighter/dist/esm/styles/prism';
+import remarkGfm from 'remark-gfm';
+import rehypeRaw from 'rehype-raw';
 
 // --- Main Chat Component ---
 function App() {
@@ -109,8 +113,36 @@ function App() {
       <main className="flex-1 overflow-y-auto p-4 space-y-4">
         {messages.map((msg, index) => (
           <div key={index} className={`flex ${msg.sender === 'user' ? 'justify-end' : 'justify-start'}`}>
-            <div className={`prose max-w-lg p-3 rounded-lg shadow ${msg.sender === 'user' ? 'bg-blue-500 text-white prose-invert' : 'bg-white text-gray-800'}`}>
-              <ReactMarkdown>{msg.text || '...'}</ReactMarkdown>
+            <div className={`prose max-w-lg p-3 rounded-lg shadow ${msg.sender === 'user' ? 'bg-blue-500 text-white prose-invert' : 'bg-white text-gray-800 markdown-container'}`}>
+              {msg.sender === 'user' ? (
+                <div className="whitespace-pre-wrap">{msg.text}</div>
+              ) : (
+                <ReactMarkdown
+                  remarkPlugins={[remarkGfm]}
+                  rehypePlugins={[rehypeRaw]}
+                  components={{
+                    code({ node, inline, className, children, ...props }) {
+                      const match = /language-(\w+)/.exec(className || '');
+                      return !inline && match ? (
+                        <SyntaxHighlighter
+                          style={a11yDark}
+                          language={match[1]}
+                          PreTag="div"
+                          {...props}
+                        >
+                          {String(children).replace(/\n$/, '')}
+                        </SyntaxHighlighter>
+                      ) : (
+                        <code className={className} {...props}>
+                          {children}
+                        </code>
+                      );
+                    },
+                  }}
+                >
+                  {msg.text || '...'}
+                </ReactMarkdown>
+              )}
             </div>
           </div>
         ))}

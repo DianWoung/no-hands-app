@@ -36,3 +36,44 @@
     transform: rotate(360deg);
   }
 }
+
+.markdown-container h1, .markdown-container h2, .markdown-container h3 {
+  font-weight: bold;
+  margin-top: 1em;
+  margin-bottom: 0.5em;
+}
+
+.markdown-container ul, .markdown-container ol {
+  margin-left: 1.5em;
+  padding-left: 1.5em;
+  list-style: revert;
+}
+
+
+.markdown-container code {
+  background-color: #f0f0f0;
+  padding: 0.2em 0.4em;
+  border-radius: 3px;
+  color: #333;
+}
+
+.markdown-container pre {
+    background-color: #2d2d2d;
+    padding: 1em;
+    border-radius: 5px;
+}
+
+.markdown-container pre code {
+  background-color: transparent;
+  color: #fff;
+  padding: 0;
+}
+
+.markdown-container p {
+    margin-bottom: 1em;
+}
+
+.markdown-container a {
+  color: #007bff;
+  text-decoration: underline;
+}
