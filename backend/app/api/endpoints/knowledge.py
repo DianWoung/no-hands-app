@@ -15,7 +15,8 @@ def get_knowledge_answer(req: Request, request_data: schemas.QuestionRequest):
     if knowledge_service is None:
         raise HTTPException(
             status_code=503,
-            detail="KnowledgeService is not available. Ensure OPENAI_API_KEY is set and vector store is built.",
+            detail="KnowledgeService is not available. This could be because the vector store has not been "
+                   "built yet, or the embedding model is misconfigured. Please check the application logs."
         )
 
     result = knowledge_service.answer_question(request_data.question)
