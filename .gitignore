@@ -9,7 +9,7 @@ venv/
 *.egg-info/
 .installed.cfg
 *.egg
-
+*.bin
 # Databases
 *.db
 *.sqlite3

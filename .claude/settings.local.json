@@ -19,7 +19,20 @@
       "Bash(jobs:*)",
       "Bash(awk:*)",
       "Bash(xargs kill:*)",
-      "Bash(lsof:*)"
+      "Bash(lsof:*)",
+      "Bash(git commit:*)",
+      "Bash(uv --version)",
+      "Bash(uv init --python 3.11)",
+      "Bash(uv pip install -r backend/requirements.txt)",
+      "Bash(rm -rf node_modules package-lock.json)",
+      "Bash(pnpm install)",
+      "Bash(DISABLE_ESLINT_PLUGIN=true npm start)",
+      "Bash(rm -rf node_modules .pnpm-store pnpm-lock.yaml package-lock.json)",
+      "Bash(npm cache clean --force)",
+      "Bash(rm -rf node_modules pnpm-lock.yaml package-lock.json)",
+      "Bash(yarn install)",
+      "Bash(ollama pull qwen2.5:0.5b)",
+      "Bash(ollama pull bge-large-zh:v1.5)"
     ],
     "deny": [],
     "ask": []

@@ -71,9 +71,9 @@ workflow.add_conditional_edges(
     tools_condition,
     {
         # If the agent wants to call a tool, route to the 'tools' node
-        "continue": "tools",
+        "tools": "tools",
         # If the agent is finished, route to the 'end' node
-        "end": END,
+        "__end__": END,
     },
 )
 
