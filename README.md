@@ -9,6 +9,26 @@ The assistant is built with a modern, robust tech stack:
 - **Knowledge Base**: ChromaDB as a vector store for Retrieval-Augmented Generation (RAG).
 - **Frontend**: React with TailwindCSS for a clean, modern user interface.
 
+## 🚀 Latest Features
+
+### Multiple Embedding Providers
+The system now supports three embedding providers:
+- **GLM Embedding**: 智谱AI's embedding-3 model (1024 dimensions, optimized for Chinese)
+- **Ollama**: Local models including qwen2.5:0.5b (896 dimensions)
+- **OpenAI**: text-embedding-3-small (1536 dimensions)
+
+### Comprehensive Phone Database
+- **6 Price Ranges**: From under ¥1000 to ¥5000+
+- **20+ Phone Models**: Covering major brands (Xiaomi, Apple, Samsung, Huawei, Honor, etc.)
+- **Smart Search**: Price-based recommendations, user type matching, feature comparison
+- **Knowledge Base**: Detailed specifications and pricing information
+
+### Enhanced Search Capabilities
+- **Price Range Queries**: "推荐1000元以下的手机", "2500元左右的游戏手机"
+- **User Type Matching**: "学生推荐手机", "老年人手机", "商务手机"
+- **Feature-based Search**: "拍照手机", "游戏手机", "长续航手机"
+- **Brand Preferences**: Support for specific brand queries
+
 ---
 
 ## How to Run This Project
@@ -111,8 +131,27 @@ Your browser should open to `http://localhost:3000`. The status on the page shou
 
 You can now start asking questions! Try these:
 
+**Product Information:**
 - `How much is the iPhone 15 Pro?`
 - `What is the battery life of the Sony WH-1000XM5 Headphones?` (This will use the knowledge base)
+- `小米14的配置和价格是多少？`
+
+**Price-based Recommendations:**
+- `推荐1000元以下的手机`
+- `2500元左右的游戏手机推荐`
+- `3千到4千元的手机有什么推荐？`
+
+**User Type Matching:**
+- `推荐适合学生使用的手机，预算1500元左右`
+- `老年人手机推荐`
+- `商务手机推荐`
+
+**Feature-based Search:**
+- `拍照手机推荐`
+- `长续航手机推荐`
+- `快充手机推荐`
+
+**Database Queries:**
 - `Is the Organic Cotton T-Shirt in stock?` (This will use the database tool)
 - `What is the status of order #12345?` (This will use the database tool)
 - `Compare the iPhone 15 Pro and the MacBook Pro` (This will test the agent's reasoning)
